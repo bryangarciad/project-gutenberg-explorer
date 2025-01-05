@@ -171,7 +171,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-gutenberg-explorer-api/requirements.txt
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
