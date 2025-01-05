@@ -4,16 +4,32 @@
 
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('Profiles', {
-        name: Sequelize.DataTypes.STRING,
-        isBetaMember: {
-            type: Sequelize.DataTypes.BOOLEAN,
-            defaultValue: false,
-            allowNull: false,
-        },
-        });
+        return queryInterface.sequelize.transaction(t => 
+            Promise.all([
+                queryInterface.createTable('User', {
+                    id: Sequelize.DataTypes.UUID,
+                    firstName: Sequelize.DataTypes.STRING,
+                    lastName: Sequelize.DataTypes.STRING,
+                    email: Sequelize.DataTypes.STRING,
+                    passwordHash: Sequelize.DataTypes.TEXT,
+                    createdAt: Sequelize.DataTypes.DATE
+                }, { transaction: t }),
+                queryInterface.createTable('UserBooks', {
+                    userId: Sequelize.DataTypes.UUID,
+                    bookId: Sequelize.DataTypes.STRING,
+                    readLater: Sequelize.DataTypes.BOOLEAN,
+                    downloaded: Sequelize.DataTypes.BOOLEAN,
+                    createdAt: Sequelize.DataTypes.DATE
+                }, { transaction: t })
+            ])
+        );
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('Profiles');
+        return queryInterface.sequelize.transaction(t => 
+            Promise.all([
+                queryInterface.dropTable('User', { transaction: t }),
+                queryInterface.dropTable('UserBooks', { transaction: t })
+            ])
+        );
     },
 };
