@@ -1,0 +1,22 @@
+{
+  "name": "gutenberg-explorere-db",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "init-db-config": "mkdir -p src/db && cd src/db && sequelize-cli init",
+    "db-migrate-development": "sequelize-cli db:migrate --env development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.7",
+    "faker": "^6.6.6",
+    "pg": "^8.13.1",
+    "sequelize": "^6.33.0",
+    "sequelize-cli": "^6.2.0"
+  }
+}
