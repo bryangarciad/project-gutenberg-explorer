@@ -1,7 +1,13 @@
-from fastapi import APIRouter, status
+from fastapi import status
+from app.routes.base_router import BaseRouter
 
-health_check_router = APIRouter()
+class HealthCheckRoute(BaseRouter):
+    def _setup_routes(self):
+        self._router.add_api_route(
+            path="/",
+            status_code=status.HTTP_200_OK,
+            methods=["GET"],
+            endpoint=lambda : {"message": "OK"}
+        )
 
-@health_check_router.get("/", status_code=status.HTTP_200_OK)
-async def root():
-    return {"message": "OK"}
+        self._sub_app.include_router(self._router)
